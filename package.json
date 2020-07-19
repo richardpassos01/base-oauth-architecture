@@ -1,0 +1,67 @@
+{
+  "name": "base-oauth-architecture",
+  "version": "1.0.0",
+  "engines": {
+    "node": "13.x"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "start": "node --experimental-modules -r dotenv/config src/server.js",
+    "dev": "DEBUG=BASE-REPOSITORY:* node --experimental-modules -r dotenv/config src/server.js",
+    "nodemon": "nodemon -r dotenv/config -L src/server.js",
+    "npm-clen-cache": "npm cache clean --force",
+    "debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "lint": "./node_modules/.bin/eslint src",
+    "migration-pg:create": "db-migrate create --migrations-dir src/database/migrations/postgres --config src/database/config/database.json -e pg",
+    "migration-pg:up": "db-migrate --migrations-dir src/database/migrations/postgres up --config src/database/config/database.json -e pg",
+    "migration-pg:down": "db-migrate --migrations-dir src/database/migrations/postgres down --config src/database/config/database.json -e pg",
+    "migration-mongo:create": "db-migrate create --migrations-dir src/database/migrations/mongo --config src/database/config/database.json -e mongo",
+    "migration-mongo:up": "db-migrate --migrations-dir src/database/migrations/mongo up --config src/database/config/database.json -e mongo",
+    "migration-mongo:down": "db-migrate --migrations-dir src/database/migrations/mongo down --config src/database/config/database.json -e mongo",
+    "migrations": "npm run migration-pg:up && npm run migration-mongo:up",
+    "migrations:down": "npm run migration-pg:down && npm run migration-mongo:down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardpassos01/base-oauth-architecture.git"
+  },
+  "keywords": [],
+  "author": "Richard Passos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richardpassos01/base-oauth-architecture/issues"
+  },
+  "homepage": "https://github.com/richardpassos01/base-oauth-architecture#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "db-migrate": "^0.11.11",
+    "db-migrate-mongodb": "^1.5.0",
+    "db-migrate-pg": "^1.2.2",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "env-var": "^6.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.1.3",
+    "http-status-codes": "^1.4.0",
+    "ioredis": "^4.17.3",
+    "mongoose": "^5.9.19",
+    "pg": "^8.2.1",
+    "sequelize": "^5.21.13",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "i": "^0.3.6",
+    "jest": "^26.1.0",
+    "nodemon": "^2.0.4",
+    "npm": "^6.14.6"
+  }
+}

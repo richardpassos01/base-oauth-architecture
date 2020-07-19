@@ -1,0 +1,39 @@
+{
+  "pg": {
+    "driver": "pg",
+    "user": {
+      "ENV": "POSTGRES_USER"
+    },
+    "password": {
+      "ENV": "POSTGRES_PASSWORD"
+    },
+    "host": {
+      "ENV": "POSTGRES_HOST"
+    },
+    "database": {
+      "ENV": "POSTGRES_DB"
+    },
+    "port": {
+      "ENV": "POSTGRES_PORT"
+    },
+    "schema": "public"
+  },
+  "mongo": {
+    "driver": "mongodb",
+    "user": {
+      "ENV": "MONGO_USER"
+    },
+    "password": {
+      "ENV": "MONGO_PASSWORD"
+    },
+    "host": {
+      "ENV": "MONGO_HOST"
+    },
+    "database": {
+      "ENV": "MONGO_DB"
+    },
+    "port": {
+      "ENV": "MONGO_PORT"
+    }
+  }
+}

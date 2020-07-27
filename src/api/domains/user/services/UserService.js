@@ -1,9 +1,6 @@
 const logger = require('../../../../helper/logger');
-const { redis: { key, action } } = require('../../../../helper/enumHelper');
+const { redis: { key, action }, user: { roles: rolesCfg } } = require('../../../../helper/enumHelper');
 
-const rolesCfg = {
-  user: 'user'
-};
 
 const sanitizeAndCacheData = (data, redisClient, rediKey) => {
   const resultArray = Array.isArray(data) ? data : [data];

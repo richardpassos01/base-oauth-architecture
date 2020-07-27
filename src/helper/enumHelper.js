@@ -19,5 +19,14 @@ module.exports = Object.freeze({
         list: 'listUsers'
       }
     }
+  },
+  user: {
+    roles: {
+      user: 'user',
+      operator: 'operator',
+      sensitiveViewer: 'sensitiveViewer',
+      admin: 'admin',
+      superAdmin: 'superAdmin'
+    }
   }
 });

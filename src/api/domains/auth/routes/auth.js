@@ -7,5 +7,8 @@ exports.loadIn = function loadIn(
   controller = userController
 ) {
   router.post('/authenticate',
-    (...args) => controller.authenticate(...args));
+    (...args) => controller.verifyUserAndAuthenticate(...args));
+
+  router.post('/authenticate/refresh',
+    (...args) => controller.verifyTokenAndAuthenticate(...args));
 };

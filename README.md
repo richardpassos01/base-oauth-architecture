@@ -2,6 +2,9 @@
 
 Olá pessoal,
 
+## OBEJTIVO
+Contruir uma arquitetura de autenticação JWT para ser usada como base em projetos open sources
+
 Estou criando este code base para facilitar na construção de aplicações nodejs, utilizando express, mongoose, sequelize e redis.
 
 Estruturei em minha visão essa arquitetura que pode atender grandes e pequenos projetos, utilizando conceitos de factory e camada de dominio, dei inicio ao projeto.
@@ -18,5 +21,6 @@ Estruturei em minha visão essa arquitetura que pode atender grandes e pequenos 
 * Criar coverage 100% nos arquivos
 * Corrigir e melhorar migrations do mongo-db, talves utilizar a lib `migrate-mongo`
 * Dockerizar projeto e criar docker-compose
+* Criar ErrorHandler para inserir nos catchs dos controllers
 
 # CONTRIBUIÇÕES SÃO SEMPRE BEM VINDAS :D

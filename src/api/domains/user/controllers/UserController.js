@@ -1,4 +1,4 @@
-const { OK } = require('http-status-codes');
+const { OK, BAD_REQUEST } = require('http-status-codes');
 const logger = require('../../../../helper/logger');
 
 class UserController {
@@ -11,7 +11,12 @@ class UserController {
 
     return this.service.listUsers({ userId })
       .then((users) => res.status(OK).json(users))
-      .catch((err) => logger.error(err));
+      .catch((err) => {
+        logger.error(err);
+        res.status(BAD_REQUEST).send({
+          message: err.message
+        });
+      });
   }
 
   create(req, res) {
@@ -35,7 +40,9 @@ class UserController {
       .then((user) => res.status(OK).json(user))
       .catch((err) => {
         logger.error(err);
-        throw err;
+        res.status(BAD_REQUEST).send({
+          message: err.message
+        });
       });
   }
 }

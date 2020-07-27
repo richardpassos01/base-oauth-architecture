@@ -4,36 +4,46 @@ const logger = require('../../../../helper/logger');
 class AuthController {
   constructor(params) {
     this.service = params.service;
-    this.userService = params.userService;
   }
 
-  async authenticate(req, res) {
+  async verifyTokenAndAuthenticate(req, res) {
+    const { refreshToken } = req.body;
+
+    return this.service.verifyTokenAndAuthenticate({
+      refreshToken
+    })
+      .then((token) => res.status(OK).json(token))
+      .catch((err) => {
+        logger.error(err);
+        res.status(BAD_REQUEST).send({
+          message: err.message
+        });
+      });
+  }
+
+  async verifyUserAndAuthenticate(req, res) {
     const {
       username,
       email,
       document,
-      password
+      password,
+      refreshToken
     } = req.body;
 
-    try {
-      const user = await this.userService.getUserByIdentificatorAndValidate({
-        username,
-        email,
-        document,
-        password
+    return this.service.verifyUserAndAuthenticate({
+      username,
+      email,
+      document,
+      password,
+      refreshToken
+    })
+      .then((token) => res.status(OK).json(token))
+      .catch((err) => {
+        logger.error(err);
+        res.status(BAD_REQUEST).send({
+          message: err.message
+        });
       });
-
-      const token = await this.service.authenticate({
-        user
-      });
-
-      res.status(OK).json(token);
-    } catch (err) {
-      logger.error(err);
-      res.status(BAD_REQUEST).send({
-        message: err.message
-      });
-    }
   }
 }
 

@@ -1,5 +1,5 @@
 const Controller = require('../controllers/AuthController');
-const AuthService = require('../services/AuthService');
+const Service = require('../services/AuthService');
 const AuthRepository = require('../repositories/AuthRepository');
 
 const UserService = require('../../user/services/UserService');
@@ -11,12 +11,10 @@ const Postgres = require('../../../../database/models/postgres');
 
 const define = {
   auth: {
-    Service: AuthService,
     Repository: AuthRepository
   },
   user: {
-    Repository: UserRepository,
-    Service: UserService
+    Repository: UserRepository
   }
 };
 
@@ -26,19 +24,18 @@ let postgres;
 
 class AuthFactory {
   creatreController(params = {}) {
-    const service = params.service || this.createService({}, 'auth');
-    const userService = params.userService || this.createService({}, 'user');
+    const service = params.service || this.createService();
 
-    return new Controller({ service, userService });
+    return new Controller({ service });
   }
 
-  createService(params = {}, prefix) {
-    const repository = params.repository || this.createRepository(prefix);
-    const { [prefix]: { Service } } = define;
-
+  createService(params = {}) {
     redis = redis || new Redis();
+    const repository = params.repository || this.createRepository('auth');
+    const userRepository = params.repository || this.createRepository('user');
+    const userService = new UserService({ repository: userRepository, redis });
 
-    return new Service({ repository, redis });
+    return new Service({ repository, redis, userService });
   }
 
   createRepository(prefix) {

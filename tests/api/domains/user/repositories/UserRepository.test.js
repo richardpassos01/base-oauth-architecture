@@ -56,42 +56,7 @@ describe('#BeneficiaryRepository', () => {
     });
   });
 
-  describe('#listUsers', () => {
-    it('Should list mongo Users and call AuditLog', async () => {
-      const result = await repository.listUsers();
-
-      const { User, AuditLog } = await mongo.models();
-
-      expect(mongo.models).toHaveBeenCalledTimes(2);
-      expect(mongo.models).toHaveBeenCalledWith();
-
-      expect(User.find).toHaveBeenCalledTimes(1);
-      expect(User.find).toHaveBeenCalledWith(null);
-
-      expect(AuditLog.create).toHaveBeenCalledTimes(1);
-
-      expect(result).toEqual(mockResult);
-    });
-
-    it('Should get User by id', async () => {
-      const { result: { _id: userId } } = defaultResult;
-      const result = await repository.listUsers({ userId });
-
-      const { User, AuditLog } = await mongo.models();
-
-      expect(mongo.models).toHaveBeenCalledTimes(2);
-      expect(mongo.models).toHaveBeenCalledWith();
-
-      expect(User.find).toHaveBeenCalledTimes(1);
-      expect(User.find).toHaveBeenCalledWith({ _id: userId });
-
-      expect(AuditLog.create).toHaveBeenCalledTimes(1);
-
-      expect(result).toEqual(mockResult);
-    });
-  });
-
-  describe('#create', () => {
+  describe.skip('#create', () => {
     it('Should create user on mongo and call AuditLog', async () => {
       const { name } = params;
       const { result } = await repository.create({ name });
@@ -107,28 +72,6 @@ describe('#BeneficiaryRepository', () => {
       expect(AuditLog.create).toHaveBeenCalledTimes(1);
 
       expect(result).toEqual(result);
-    });
-  });
-
-  describe('#listMultiDatabaseUsers', () => {
-    it('Should list users from mongo and postgres and call AuditLog', async () => {
-      const result = await repository.listMultiDatabaseUsers(null);
-
-      const { User: mongoUserModel, AuditLog } = await mongo.models();
-      const { user: postgresUserModel } = await postgres.models();
-
-      expect(mongo.models).toHaveBeenCalledTimes(2);
-      expect(mongo.models).toHaveBeenCalledWith();
-
-      expect(mongoUserModel.find).toHaveBeenCalledTimes(1);
-      expect(mongoUserModel.find).toHaveBeenCalledWith();
-
-      expect(postgresUserModel.findAll).toHaveBeenCalledTimes(1);
-      expect(postgresUserModel.findAll).toHaveBeenCalledWith();
-
-      expect(AuditLog.create).toHaveBeenCalledTimes(1);
-
-      expect(result).toEqual([...mockResult, ...mockResult]);
     });
   });
 });

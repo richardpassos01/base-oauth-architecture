@@ -4,11 +4,11 @@ class AuthRepository {
     this.postgres = params.postgres;
   }
 
-  async insertOnBlackList({ accessToken }) {
+  async get({ accessToken }) {
     return accessToken;
   }
 
-  async checkBlackList({ accessToken }) {
+  async create({ accessToken }) {
     return accessToken;
   }
 }

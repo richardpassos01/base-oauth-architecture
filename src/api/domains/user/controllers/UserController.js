@@ -6,19 +6,6 @@ class UserController {
     this.service = params.service;
   }
 
-  listUsers(req, res) {
-    const { userId } = req.query;
-
-    return this.service.listUsers({ userId })
-      .then((users) => res.status(OK).json(users))
-      .catch((err) => {
-        logger.error(err);
-        res.status(BAD_REQUEST).send({
-          message: err.message
-        });
-      });
-  }
-
   create(req, res) {
     const {
       username,

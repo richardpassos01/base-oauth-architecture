@@ -19,14 +19,19 @@ module.exports = {
       .asBool()
   },
 
-  crypter: {
-    secret: env
-      .get('BASE_PROJECT_CRYPTER_SECRET')
+  jwt: {
+    accessTokenSecret: env
+      .get('BASE_TOKEN_SECRET')
+      .required(true)
       .asString(),
-
-    jwt: {
-      jwtSecret: 'baseProjectSecret'
-    }
+    tokenExpires: env.get('BASE_TOKEN_SECRET_EXPIRES_IN')
+      .asString(),
+    refreshTokenSecret: env
+      .get('BASE_REFRESH_TOKEN_SECRET')
+      .required(true)
+      .asString(),
+    refreshExpires: env.get('BASE_REFRESH_TOKEN_SECRET_EXPIRES_IN')
+      .asString()
   },
 
   swagger: {

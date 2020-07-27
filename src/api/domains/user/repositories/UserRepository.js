@@ -4,6 +4,33 @@ class UserRepository {
     this.postgres = params.postgres;
   }
 
+  async getUserByIdentificator({ username, email, document }) {
+    const { User } = await this.mongo.models();
+
+    return User.findOne({
+      $or: [
+        { email },
+        { document },
+        { username }
+      ]
+    });
+  }
+
+  async getUserByIdentificatorAndValidate({
+    username,
+    email,
+    document,
+    password
+  }) {
+    const user = await this.getUserByIdentificator({ username, email, document });
+    const validated = user.validPassword(password);
+
+    return {
+      user,
+      validated
+    };
+  }
+
   async listUsers({ userId = null } = {}) {
     const { User, AuditLog } = await this.mongo.models();
     const findAll = userId ? { _id: userId } : null;
@@ -21,22 +48,36 @@ class UserRepository {
     return users;
   }
 
-  async create({ name }) {
-    const { User, AuditLog } = await this.mongo.models();
-
-    const user = await User.create({
-      name
+  async create({
+    username,
+    email,
+    document,
+    fullName,
+    password,
+    roles
+  }) {
+    const { User } = await this.mongo.models();
+    const user = new User({
+      username,
+      email,
+      document,
+      fullName,
+      roles
     });
 
-    await AuditLog.create({
-      date: new Date(),
-      log: {
-        type: 'create',
-        data: user
-      }
-    });
+    user.setPassword(password);
 
-    return user;
+    // const { User, AuditLog } = await this.mongo.models();
+
+    // await AuditLog.create({
+    //   date: new Date(),
+    //   log: {
+    //     type: 'create',
+    //     data: user
+    //   }
+    // });
+
+    return user.save();
   }
 
   async listMultiDatabaseUsers() {

@@ -15,11 +15,28 @@ class UserController {
   }
 
   create(req, res) {
-    const { name } = req.body;
+    const {
+      username,
+      email,
+      document,
+      fullName,
+      password,
+      roles
+    } = req.body;
 
-    return this.service.create({ name })
+    return this.service.create({
+      username,
+      email,
+      document,
+      fullName,
+      password,
+      roles
+    })
       .then((user) => res.status(OK).json(user))
-      .catch((err) => logger.error(err));
+      .catch((err) => {
+        logger.error(err);
+        throw err;
+      });
   }
 }
 
